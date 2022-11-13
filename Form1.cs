@@ -34,5 +34,20 @@ namespace LAB5
             
            // myRect.Render(g); // теперь так рисуем
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            float dx = marker.X - player.X;
+            float dy = marker.Y - player.Y;
+
+            float lenght = MathF.Sqrt(dx*dx + dy*dy);
+            dx /= lenght;
+            dy /= lenght;
+
+            player.X += dx * 2;
+            player.Y += dy * 2;
+
+            pbMain.Invalidate();
+        }
     }
 }
