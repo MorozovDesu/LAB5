@@ -12,6 +12,11 @@ namespace LAB5
         {
             InitializeComponent();
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
+            // добавл€ю реакцию на пересечение
+            player.OnOverlap += (p, obj) =>
+            {
+                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] »грок пересекс€ с {obj}\n" + txtLog.Text;
+            };
             marker = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
             objects.Add(marker);
             objects.Add(player);
@@ -34,15 +39,17 @@ namespace LAB5
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
-                    // это не трогаю
-                    txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] »грок пересекс€ с {obj}\n" + txtLog.Text;
+                    /* ”ƒјЋяё “”“ 
+                       txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] »грок пересекс€ с {obj}\n" + txtLog.Text; */
 
-                    // тут провер€ю что достиг маркера
+                    // а вот эти строчки добавл€ем
+                    player.Overlap(obj); // то есть игрок пересекс€ с объектом
+                    obj.Overlap(player); // и объект пересекс€ с игроком
+
                     if (obj == marker)
                     {
-                        // если достиг, то удал€ю маркер из оригинального objects
                         objects.Remove(marker);
-                        marker = null; // и обнул€ю маркер
+                        marker = null;
                     }
                 }
 
