@@ -17,6 +17,11 @@ namespace LAB5
             {
                 txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] »грок пересекс€ с {obj}\n" + txtLog.Text;
             };
+            player.OnMarkerOverlap += (m) =>
+            {
+                objects.Remove(m);
+                marker = null;
+            };
             marker = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
             objects.Add(marker);
             objects.Add(player);
@@ -30,8 +35,6 @@ namespace LAB5
             var g = e.Graphics;
 
             g.Clear(Color.White);
-
-
             // мен€ю тут objects на objects.ToList()
             // это будет создавать копию списка
             // и позволит модифицировать оригинальный objects пр€мо из цикла foreach
@@ -39,20 +42,14 @@ namespace LAB5
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
-                    /* ”ƒјЋяё “”“ 
-                       txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] »грок пересекс€ с {obj}\n" + txtLog.Text; */
-
-                    // а вот эти строчки добавл€ем
-                    player.Overlap(obj); // то есть игрок пересекс€ с объектом
-                    obj.Overlap(player); // и объект пересекс€ с игроком
-
-                    if (obj == marker)
-                    {
-                        objects.Remove(marker);
-                        marker = null;
-                    }
+                    player.Overlap(obj);
+                    obj.Overlap(player);
                 }
+            }
 
+            // рендерим объекты
+            foreach (var obj in objects)
+            {
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
@@ -62,22 +59,35 @@ namespace LAB5
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // тут добавл€ем проверку на marker не нулевой
             if (marker != null)
             {
                 float dx = marker.X - player.X;
                 float dy = marker.Y - player.Y;
-
                 float length = MathF.Sqrt(dx * dx + dy * dy);
                 dx /= length;
                 dy /= length;
 
-                player.X += dx * 2;
-                player.Y += dy * 2;
+                // по сути мы теперь используем вектор dx, dy
+                // как вектор ускорени€, точнее даже вектор прит€жени€
+                // который прит€гивает игрока к маркеру
+                // 0.5 просто коэффициент который подобрал на глаз
+                // и который дает естественное ощущение движени€
+                player.vX += dx * 0.5f;
+                player.vY += dy * 0.5f;
+
+                // расчитываем угол поворота игрока 
+                player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
             }
 
-            // запрашиваем обновление pbMain
-            // это вызовет метод pbMain_Paint по новой
+            // тормоз€щий момент,
+            // нужен чтобы, когда игрок достигнет маркера произошло постепенное замедление
+            player.vX += -player.vX * 0.1f;
+            player.vY += -player.vY * 0.1f;
+
+            // пересчет позици€ игрока с помощью вектора скорости
+            player.X += player.vX;
+            player.Y += player.vY;
+
             pbMain.Invalidate();
         }
 
