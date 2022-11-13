@@ -1,4 +1,6 @@
 using LAB5.Objects;
+using System.Diagnostics.Metrics;
+using System.Reflection;
 
 namespace LAB5
 {
@@ -9,6 +11,7 @@ namespace LAB5
         Player player;
         Marker marker;
         GreenCircle greenCircle;
+        GreenCircle greenCircle2;
         public Form1()
         {
             InitializeComponent();
@@ -27,13 +30,16 @@ namespace LAB5
             {
                 objects.Remove(gr);
                 greenCircle = null;
+                enumerator();
             };
-            marker = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
-            greenCircle = new GreenCircle(pbMain.Width / 10,pbMain.Height/10,0);
+            marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
+            greenCircle = new GreenCircle(pbMain.Width / 10, pbMain.Height / 10, 0);
+            greenCircle2 = new GreenCircle(pbMain.Width / 5+6, pbMain.Height / 5+10, 0);
             objects.Add(greenCircle);
+            objects.Add(greenCircle2);
             objects.Add(marker);
             objects.Add(player);
-
+            
             //objects.Add(new MyRectangle(50, 50, 0));
             //objects.Add(new MyRectangle(100, 100, 45));
         }
@@ -96,7 +102,7 @@ namespace LAB5
             player.X += player.vX;
             player.Y += player.vY;
 
-            
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -104,6 +110,7 @@ namespace LAB5
             updatePlayer();
             pbMain.Invalidate();
             GreenCircle();
+            //enumerator();
         }
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
@@ -121,14 +128,27 @@ namespace LAB5
         private void GreenCircle()
         {
             Random rnd = new Random();
-            int value = rnd.Next(1,10);
+            int value = rnd.Next(1, 10);
             Random rnd2 = new Random();
-            int value2 = rnd2.Next(1,10);
-            if (greenCircle == null) 
+            int value2 = rnd2.Next(1, 10);
+            if (greenCircle == null)
             {
                 greenCircle = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
                 objects.Add(greenCircle);
-            } 
+            }
         }
+        int counter = 0; 
+        private void enumerator()
+        {
+           
+            label1.Text = string.Empty;
+            if(greenCircle == null)
+            {
+                counter += 1;
+            }
+                label1.Text = string.Format("Очки: ")+ counter.ToString();
+        }
+        
+
     }
 }

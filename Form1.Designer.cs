@@ -32,14 +32,15 @@
             this.pbMain = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.SuspendLayout();
             // 
             // pbMain
             // 
-            this.pbMain.Location = new System.Drawing.Point(-1, 1);
+            this.pbMain.Location = new System.Drawing.Point(12, 50);
             this.pbMain.Name = "pbMain";
-            this.pbMain.Size = new System.Drawing.Size(601, 444);
+            this.pbMain.Size = new System.Drawing.Size(568, 372);
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
             this.pbMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pbMain_Paint);
@@ -53,23 +54,34 @@
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(606, 1);
+            this.txtLog.Location = new System.Drawing.Point(586, 1);
             this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(193, 444);
+            this.txtLog.Size = new System.Drawing.Size(213, 444);
             this.txtLog.TabIndex = 1;
             this.txtLog.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(495, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Очки:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.pbMain);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -78,5 +90,6 @@
         private PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
         private RichTextBox txtLog;
+        private Label label1;
     }
 }
