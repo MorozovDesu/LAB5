@@ -27,27 +27,64 @@ namespace LAB5
             g.Clear(Color.White);
 
 
-            foreach(var obj in objects ){
+            // меняю тут objects на objects.ToList()
+            // это будет создавать копию списка
+            // и позволит модифицировать оригинальный objects прямо из цикла foreach
+            foreach (var obj in objects.ToList())
+            {
+                if (obj != player && player.Overlaps(obj, g))
+                {
+                    // это не трогаю
+                    txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+
+                    // тут проверяю что достиг маркера
+                    if (obj == marker)
+                    {
+                        // если достиг, то удаляю маркер из оригинального objects
+                        objects.Remove(marker);
+                        marker = null; // и обнуляю маркер
+                    }
+                }
+
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
-            
-           // myRect.Render(g); // теперь так рисуем
+
+            // myRect.Render(g); // теперь так рисуем
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            float dx = marker.X - player.X;
-            float dy = marker.Y - player.Y;
+            // тут добавляем проверку на marker не нулевой
+            if (marker != null)
+            {
+                float dx = marker.X - player.X;
+                float dy = marker.Y - player.Y;
 
-            float lenght = MathF.Sqrt(dx*dx + dy*dy);
-            dx /= lenght;
-            dy /= lenght;
+                float length = MathF.Sqrt(dx * dx + dy * dy);
+                dx /= length;
+                dy /= length;
 
-            player.X += dx * 2;
-            player.Y += dy * 2;
+                player.X += dx * 2;
+                player.Y += dy * 2;
+            }
 
+            // запрашиваем обновление pbMain
+            // это вызовет метод pbMain_Paint по новой
             pbMain.Invalidate();
+        }
+
+        private void pbMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            // тут добавил создание маркера по клику если он еще не создан
+            if (marker == null)
+            {
+                marker = new Marker(0, 0, 0);
+                objects.Add(marker); // и главное не забыть пололжить в objects
+            }
+
+            marker.X = e.X;
+            marker.Y = e.Y;
         }
     }
 }
