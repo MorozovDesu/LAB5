@@ -26,8 +26,8 @@ namespace LAB5
             objects.Add(marker);
             objects.Add(player);
 
-            objects.Add(new MyRectangle(50, 50, 0));
-            objects.Add(new MyRectangle(100, 100, 45));
+            //objects.Add(new MyRectangle(50, 50, 0));
+           // objects.Add(new MyRectangle(100, 100, 45));
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -35,6 +35,7 @@ namespace LAB5
             var g = e.Graphics;
 
             g.Clear(Color.White);
+            updatePlayer();
             // меняю тут objects на objects.ToList()
             // это будет создавать копию списка
             // и позволит модифицировать оригинальный objects прямо из цикла foreach
@@ -56,8 +57,7 @@ namespace LAB5
 
             // myRect.Render(g); // теперь так рисуем
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
+        private void updatePlayer()
         {
             if (marker != null)
             {
@@ -88,6 +88,12 @@ namespace LAB5
             player.X += player.vX;
             player.Y += player.vY;
 
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            updatePlayer();
             pbMain.Invalidate();
         }
 
