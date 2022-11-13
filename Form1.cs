@@ -103,6 +103,7 @@ namespace LAB5
         {
             updatePlayer();
             pbMain.Invalidate();
+            GreenCircle();
         }
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
@@ -116,6 +117,18 @@ namespace LAB5
 
             marker.X = e.X;
             marker.Y = e.Y;
+        }
+        private void GreenCircle()
+        {
+            Random rnd = new Random();
+            int value = rnd.Next(1,10);
+            Random rnd2 = new Random();
+            int value2 = rnd2.Next(1,10);
+            if (greenCircle == null) 
+            {
+                greenCircle = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
+                objects.Add(greenCircle);
+            } 
         }
     }
 }
