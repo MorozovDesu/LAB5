@@ -5,11 +5,12 @@ namespace LAB5
     public partial class Form1 : Form
     {
         MyRectangle myRect; // создадим поле под наш пр€моугольник
-
+        List<BaseObject> objects = new();
         public Form1()
         {
             InitializeComponent();
-            myRect = new MyRectangle(100, 100, 45); // создать экземпл€р класса
+            objects.Add(new MyRectangle(50, 50, 0));
+            objects.Add(new MyRectangle(100, 100, 45));
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -19,9 +20,12 @@ namespace LAB5
             g.Clear(Color.White);
 
 
-            g.Transform = myRect.GetTransform();
+            foreach(var obj in objects ){
+                g.Transform = obj.GetTransform();
+                obj.Render(g);
+            }
             
-            myRect.Render(g); // теперь так рисуем
+           // myRect.Render(g); // теперь так рисуем
         }
     }
 }
