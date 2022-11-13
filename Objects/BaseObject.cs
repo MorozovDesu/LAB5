@@ -12,7 +12,7 @@ namespace LAB5.Objects
         public float X;
         public float Y;
         public float Angle;
-        // добавил поле делегат, к которому можно будет привязать реакцию на собыития
+        // добавил поле делегат, к которому можно будет привязать реакцию на события
         public Action<BaseObject, BaseObject> OnOverlap;
 
         public BaseObject(float x, float y, float angle)

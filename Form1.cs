@@ -4,10 +4,11 @@ namespace LAB5
 {
     public partial class Form1 : Form
     {
-        MyRectangle myRect; // создадим поле под наш прямоугольник
+        //MyRectangle myRect; // создадим поле под наш прямоугольник
         List<BaseObject> objects = new();
         Player player;
         Marker marker;
+        GreenCircle greenCircle;
         public Form1()
         {
             InitializeComponent();
@@ -22,12 +23,19 @@ namespace LAB5
                 objects.Remove(m);
                 marker = null;
             };
+            player.OnGreenCircleOverlap += (gr) =>
+            {
+                objects.Remove(gr);
+                greenCircle = null;
+            };
             marker = new Marker(pbMain.Width / 2+50, pbMain.Height / 2+50, 0);
+            greenCircle = new GreenCircle(pbMain.Width / 10,pbMain.Height/10,0);
+            objects.Add(greenCircle);
             objects.Add(marker);
             objects.Add(player);
 
             //objects.Add(new MyRectangle(50, 50, 0));
-           // objects.Add(new MyRectangle(100, 100, 45));
+            //objects.Add(new MyRectangle(100, 100, 45));
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
