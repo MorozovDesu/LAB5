@@ -9,7 +9,7 @@ namespace LAB5
         public Form1()
         {
             InitializeComponent();
-            myRect = new MyRectangle(0, 0, 0); // создать экземпл€р класса
+            myRect = new MyRectangle(100, 100, 0); // создать экземпл€р класса
         }
 
         private void pbMain_Paint(object sender, PaintEventArgs e)
@@ -18,10 +18,11 @@ namespace LAB5
 
             g.Clear(Color.White);
 
-            /* ”Ѕ»–ј≈ћ
-            g.FillRectangle(new SolidBrush(Color.Yellow), 200, 100, 50, 30);
-            g.DrawRectangle(new Pen(Color.Red, 2), 200, 100, 50, 30);
-            */
+
+            var matrix = g.Transform;
+            matrix.Translate(myRect.X, myRect.Y);
+            g.Transform = matrix;
+            
             myRect.Render(g); // теперь так рисуем
         }
     }
