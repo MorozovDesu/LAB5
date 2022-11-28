@@ -32,7 +32,7 @@ namespace LAB5
                 objects.Remove(gr);
                 greenCircle = null;
                 enumerator();
-                GreenCircle();//
+                GreenCircle();
             };
             
 
@@ -43,9 +43,9 @@ namespace LAB5
             objects.Add(greenCircle2);
             objects.Add(marker);
             objects.Add(player);
+            
             greenCircle.onDeath += (c) =>
             {
-               
                 Random rnd = new Random();
                 c.X = rnd.Next(1, 500);
                 c.Y = rnd.Next(1, 500);
@@ -53,7 +53,6 @@ namespace LAB5
             };
             greenCircle2.onDeath += (c) =>
             {
-                
                 Random rnd = new Random();
                 c.X = rnd.Next(1, 500);
                 c.Y = rnd.Next(1, 500);
@@ -129,7 +128,6 @@ namespace LAB5
             updatePlayer();
             pbMain.Invalidate();
             //GreenCircle();
-            //enumerator();
         }
 
         private void pbMain_MouseClick(object sender, MouseEventArgs e)
@@ -150,29 +148,24 @@ namespace LAB5
             int value = rnd.Next(1, 10);
             Random rnd2 = new Random();
             int value2 = rnd2.Next(1, 10);
+            
             if (greenCircle == null)
             {
                 greenCircle = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
                 objects.Add(greenCircle);
+                greenCircle.onDeath += (c) =>
+                {
+                    Random rnd = new Random();
+                    c.X = rnd.Next(1, 500);
+                    c.Y = rnd.Next(1, 500);
+
+                };
             }
-            if (greenCircle2 == null)
-            {
-                greenCircle = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
-                objects.Add(greenCircle2);
-            }
-            //if (greenCircle.timer == 1)
+            //if (greenCircle2 == null)
             //{
-            //    objects.Remove(greenCircle);
-            //    greenCircle = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
-            //    objects.Add(greenCircle);
-            //}
-            //if (greenCircle2.timer == 1)
-            //{
-            //    objects.Remove(greenCircle2);
             //    greenCircle2 = new GreenCircle(pbMain.Width / value, pbMain.Height / value2, 0);
             //    objects.Add(greenCircle2);
             //}
-
         }
         int counter = 0; 
         private void enumerator()

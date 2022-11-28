@@ -15,7 +15,7 @@ namespace LAB5.Objects
     {
         public GreenCircle(float x, float y, float angle) : base(x, y, angle)
         { }
-        public Action <GreenCircle> onDeath;
+        public Action <GreenCircle> onDeath ;
         public int timer = 100;
 
         public override void Render(Graphics g)
@@ -26,7 +26,7 @@ namespace LAB5.Objects
             if(timer == 0)
             {
                 timer = 100;
-                onDeath(this);
+                onDeath(this);//получает 0 и крашится.
             }
         }
         
